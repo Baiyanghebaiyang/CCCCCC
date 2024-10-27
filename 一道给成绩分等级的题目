@@ -1,0 +1,28 @@
+#include<stdio.h>
+int main() {
+    int score;
+    printf("请输入成绩：\n");
+    scanf_s("%d",&score);
+    if(score<0||score>100){//&&和||
+        printf("输入成绩不在规定范围内，请输入0-100间的数字\n");//当输入不在规定范围内的数据时会显示
+    }
+    else {//else写几个
+        if(score>=90&&score<=100){
+            printf("成绩等级为A\n");
+        }
+        if(score<=89&&score>=80){
+            printf("成绩等级为B\n");
+        }
+        if(score<=79&&score>=70){
+            printf("成绩等级为C\n");
+        }
+        if(score<=69&&score>=60){
+            printf("成绩等级为D\n");
+        }
+        if(score<60){
+            printf("成绩等级为E\n");
+        }
+    }
+    printf("成绩评定结束");
+    return 0;
+}
