@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// 斐波那契堆的节点结构
+typedef struct Node {
+    int key;
+    struct Node *parent, *child, *left, *right;
+    int degree; // 子节点的数量
+    int mark;  // 是否曾经被合并过
+} Node;
+
+// 创建一个新的节点
+Node* createNode(int key) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->key = key;
+    node->degree = 0;
+    node->mark = 0;
+    node->child = node->parent = node->left = node->right = NULL;
+    return node;
+}
+
+// 插入节点到斐波那契堆中
+void insert(Node** root, int key) {
+    Node* node = createNode(key);
+    node->left = node->right = node;
+    if (*root == NULL) {
+        *root = node;
+    } else {
+        node->right = *root;
+        node->left = (*root)->left;
+        (*root)->left->right = node;
+        (*root)->left = node;
+        if ((*root)->key > node->key) {
+            Node* temp = *root;
+            *root = node;
+            node->parent = NULL;
+            temp->parent = *root;
+        }
+    }
+}
+
+// 合并两个斐波那契堆
+Node* merge(Node* root1, Node* root2) {
+    if (root1 == NULL) return root2;
+    if (root2 == NULL) return root1;
+    if (root1->key > root2->key) {
+        Node* temp = root1;
+        root1 = root2;
+        root2 = temp;
+    }
+    root1->right->left = root2->left;
+    root2->left->right = root1->right;
+    root1->right = root2;
+    root2->left = root1;
+    root2->parent = NULL;
+    return root1;
+}
+
+// 斐波那契堆的排序实现较为复杂，这里仅提供框架
+void fibonacciHeapSort(Node** root) {
+    // 实现细节省略
+}
+
+int main() {
+    Node* root = NULL;
+    insert(&root, 10);
+    insert(&root, 20);
+    insert(&root, 30);
+    // 继续插入其他节点...
+
+    fibonacciHeapSort(&root);
+    // 输出排序后的数组...
+
+    return 0;
+}
